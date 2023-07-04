@@ -4,10 +4,11 @@
 
 ## 개요
 ### 주제
-메신저 채팅에서 화자의 감정을 효과적으로 전달하기 위한 방법 탐색 : 
+메신저 채팅에서 화자의 감정을 효과적으로 전달하기 위한 방법 탐색 :  
 사용자가 입력한 감정 및 표현과 유사한 영화 장면에 사용자의 얼굴을 합성시켜 출력
 
 ### 설계 플로우
+구축하고자 하는 프로그램의 플로우는 아래와 같다.
 ![image](https://github.com/changbeomHa/project_SWC/assets/30552933/17f97e80-600b-48d5-a091-67b4eb0accae)
 
 ### 기능 구현
@@ -17,6 +18,39 @@
 4. 영화에 등장하는 배우의 얼굴에 사용자의 얼굴을 합성한다.
 
 ### 텍스트 유사도 분석 플로우
+텍스트 유사도 분석은 아래와 같은 과정을 거친다.
 ![image](https://github.com/changbeomHa/project_SWC/assets/30552933/aba2adf9-ba43-468c-8007-83cd0f817293)
 
 ### 텍스트 감정 분석
+텍스트의 감정 분석은 AI hub에서 제공하는 한국어 데이터로 {0:"공포", 1:"놀람", 2:"분노", 3:"슬픔", 4:"중립", 5:"행복", 6:"혐오"} 총 7개의 감정으로 분류하며, NRC-VAD-Lexicon을 사용하여 텍스트의 valence, arousal, dominance값을 구한다. 이를 종합하여 텍스트의 감정 분류와 수치를 확정한다.
+
+### 총 플로우
+위의 과정을 그림으로 나타내면 아래와 같다.
+![image](https://github.com/changbeomHa/project_SWC/assets/30552933/0a8dc8a3-2c02-4f9c-ad7f-c4e713b78714)
+
+### 테스트
+실험에는 영화 '신세계'를 사용하였다.  
+#### 입출력 결과
+아래는 입력값에 대한 출력 결과를 나타낸 것이다.
+![image](https://github.com/changbeomHa/project_SWC/assets/30552933/b041b74e-ed51-492f-b90e-5dfdb3c0fd6c)
+
+#### 얼굴 합성
+얼굴 합성에는 논문 SimSwap: An Efficient Framework For High Fidelity Face Swapping 기법을 사용하였다.  
+배우 이정재의 얼굴에 일론 머스크의 얼굴이 합성되었다. (높이 240p 기준 초당 변환에 약 4 ~ 5초 소요)
+![image](https://github.com/changbeomHa/project_SWC/assets/30552933/97ddec1d-64e8-4819-9653-1bec5108b2ec)
+
+### 정리
+프로그램의 동작 과정을 정리하면 이렇다.  
+
+Input text
+-> 사용자가 보내고자 하는메시지
+Outupt 
+-> 유사한 대본 스크립트, 감정, VAD
+-> 수많은 데이터 셋에서 적절한 결과를 고르는 스코어링 함수 제작
+-> 결과 스크립트가 가진 자막 시간
+-> 영화 장면
+
+
+
+
+
